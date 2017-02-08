@@ -20,9 +20,11 @@ static class Level
 {
 public:
 	void Initializer();
+	void DeInitializer();
 	void SetMap(int x, int y, E_LevelSlot slotType);
 	E_LevelSlot GetMap(int x, int y);
 	bool GetMapOccupied(int x, int y);
+	bool IsInitialized();
 
 	void Update();
 	void Draw();
@@ -31,6 +33,7 @@ private:
 	E_LevelSlot** m_MapArray;
 	float m_Height;
 	float m_Width;
+	bool m_initialized = false;
 	Player* m_player;
 	FoodSpawner* m_foodSpawner;
 };
