@@ -7,6 +7,8 @@ FoodSpawner* Level::m_foodSpawner = nullptr;
 MapTile*** Level::m_MapArray = nullptr;
 MapTile** Level::m_MapTiles = nullptr;
 int Level::m_MapTileCount = 0;
+int Level::m_Score = 0;
+aie::Font* Level::m_font = nullptr;
 
 void Level::Initializer()
 {
@@ -37,6 +39,9 @@ void Level::Initializer()
 		m_MapTiles[i] = nullptr;
 
 	m_MapTileCount = 0;
+
+	//Load font:
+	m_font = new aie::Font("./font/consolas.ttf", 32);
 
 	SetMap(1, 1, E_LevelSlot_Food);
 	SetMap(2, 1, E_LevelSlot_SnakeBody);
@@ -72,6 +77,9 @@ void Level::DeInitializer()
 
 	delete[] m_MapTiles;
 	m_MapTileCount = 0;
+
+	//Destroy font.
+	delete m_font;
 }
 
 E_LevelSlot Level::GetMap(int x, int y)
@@ -111,8 +119,14 @@ void Level::Draw(aie::Renderer2D& renderer)
 		}
 
 		//Draw from corner instead of center.
-		renderer.drawBox(m_MapTiles[i]->X * MAP_CELLSIZE_X + MAP_CELLSIZE_X / 2, m_MapTiles[i]->Y * MAP_CELLSIZE_Y + MAP_CELLSIZE_X / 2, MAP_CELLSIZE_X, MAP_CELLSIZE_Y);
+		renderer.drawBox(m_MapTiles[i]->X * MAP_CELLSIZE_X + MAP_CELLSIZE_X / 2, m_MapTiles[i]->Y * MAP_CELLSIZE_Y + MAP_CELLSIZE_Y / 2, MAP_CELLSIZE_X, MAP_CELLSIZE_Y);
 	}
+
+	//Draw white score.
+	renderer.setRenderColour(1, 1, 1, 1);
+	char fps[32];
+	sprintf_s(fps, 32, "Score: %i", m_Score);
+	renderer.drawText(m_font, fps, 0, MAP_SIZE_X * MAP_CELLSIZE_X - 24);
 }
 
 void Level::SetMap(int x, int y, E_LevelSlot slotType)

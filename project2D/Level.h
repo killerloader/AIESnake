@@ -55,4 +55,6 @@ private:
 	static MapTile*** m_MapArray;
 	static MapTile** m_MapTiles;//Optimization, so we can ignore map tiles which don't actually exist.
 	static int m_MapTileCount;
+	static int m_Score;
+	static aie::Font* m_font;
 };
