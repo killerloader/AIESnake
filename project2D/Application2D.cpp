@@ -3,13 +3,14 @@
 #include "Font.h"
 #include "Input.h"
 #include "Player.h"
+#include "Level.h"
 
 Application2D::Application2D() {
-
+	Level::Initializer();
 }
 
 Application2D::~Application2D() {
-
+	Level::DeInitializer();
 }
 
 bool Application2D::startup() {
@@ -58,6 +59,8 @@ void Application2D::update(float deltaTime) {
 	//
 	//if (input->isKeyDown(aie::INPUT_KEY_RIGHT))
 	//	m_cameraX += 500.0f * deltaTime;
+	
+	Level::Update(deltaTime);
 
 	// example of audio
 	if (input->wasKeyPressed(aie::INPUT_KEY_SPACE))
@@ -79,8 +82,10 @@ void Application2D::draw() {
 	// begin drawing sprites
 	m_2dRenderer->begin();
 
+	Level::Draw(*m_2dRenderer);
+
 	// demonstrate animation
-	m_2dRenderer->setUVRect(int(m_timer) % 8 / 8.0f, 0, 1.f / 8, 1.f / 8);
+	/*m_2dRenderer->setUVRect(int(m_timer) % 8 / 8.0f, 0, 1.f / 8, 1.f / 8);
 	m_2dRenderer->drawSprite(m_texture, 200, 200, 100, 100);
 
 	// demonstrate spinning sprite
@@ -106,7 +111,7 @@ void Application2D::draw() {
 	char fps[32];
 	sprintf_s(fps, 32, "FPS: %i", getFPS());
 	m_2dRenderer->drawText(m_font, fps, 0, 720 - 32);
-	m_2dRenderer->drawText(m_font, "Press Space for sound!", 0, 720 - 64);
+	m_2dRenderer->drawText(m_font, "Press Space for sound!", 0, 720 - 64);*/
 
 	// done drawing sprites
 	m_2dRenderer->end();

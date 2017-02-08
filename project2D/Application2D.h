@@ -24,8 +24,6 @@ protected:
 	aie::Font*			m_font;
 	aie::Audio*			m_audio;
 
-	Player* m_Player;
-
 	float m_cameraX, m_cameraY;
 	float m_timer;
 };

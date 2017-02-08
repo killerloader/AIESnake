@@ -2,6 +2,9 @@
 
 #include "Player.h"
 #include "FoodSpawner.h"
+#include "Texture.h"
+#include "Font.h"
+#include "Input.h"
 
 #define MAP_SIZE_X 16
 #define MAP_SIZE_Y 16
@@ -18,23 +21,38 @@ enum E_LevelSlot
 	E_LevelSlot_SnakeTail
 };
 
-static class Level
+struct MapTile
+{
+	MapTile(E_LevelSlot type, int x, int y)
+	{
+		SlotType = type;
+		ArrayID = -1;
+		X = x;
+		Y = y;
+	}
+
+	E_LevelSlot SlotType;
+	int ArrayID;	//Remembered point in the map array. For optimization.
+	int X, Y;//X and Y slot position.
+};
+
+class Level
 {
 public:
-	void Update();
-	void Draw();
-	void Initializer();
-	void DeInitializer();
-	void SetMap(int x, int y, E_LevelSlot slotType);
-	bool GetMapOccupied(int x, int y);
-	bool IsInitialized();
-	E_LevelSlot GetMap(int x, int y);
+	static void Update(float dt);
+	static void Draw(aie::Renderer2D& renderer);
+	static void Initializer();
+	static void DeInitializer();
+	static void SetMap(int x, int y, E_LevelSlot slotType);
+	static bool GetMapOccupied(int x, int y);
+	static bool IsInitialized();
+	static E_LevelSlot GetMap(int x, int y);
 
 private:
-	float m_Height;
-	float m_Width;
-	bool m_initialized = false;
-	Player* m_player = nullptr;
-	FoodSpawner* m_foodSpawner = nullptr;
-	E_LevelSlot** m_MapArray = nullptr;
+	static bool m_initialized;
+	static Player* m_player;
+	static FoodSpawner* m_foodSpawner;
+	static MapTile*** m_MapArray;
+	static MapTile** m_MapTiles;//Optimization, so we can ignore map tiles which don't actually exist.
+	static int m_MapTileCount;
 };
