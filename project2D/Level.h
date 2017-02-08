@@ -47,6 +47,7 @@ public:
 	static bool GetMapOccupied(int x, int y);
 	static bool IsInitialized();
 	static E_LevelSlot GetMap(int x, int y);
+	static const MapTile& GetMapTile(int x, int y);
 
 private:
 	static bool m_initialized;

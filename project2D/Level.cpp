@@ -90,6 +90,11 @@ E_LevelSlot Level::GetMap(int x, int y)
 	return m_MapArray[x][y]->SlotType;
 }
 
+const MapTile& Level::GetMapTile(int x, int y)
+{
+	return *m_MapArray[x][y];
+}
+
 bool Level::GetMapOccupied(int x, int y)
 {
 	return m_MapArray[x][y]->SlotType != E_LevelSlot_Empty;
