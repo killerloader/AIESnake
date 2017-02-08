@@ -77,5 +77,5 @@ void Level::Draw()
 
 void Level::SetMap(int x, int y, E_LevelSlot slotType)
 {
-
+	m_MapArray[x][y] = slotType;
 }

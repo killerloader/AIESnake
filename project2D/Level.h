@@ -13,27 +13,28 @@ enum E_LevelSlot
 	E_LevelSlot_Errortype = -1,
 	E_LevelSlot_Empty = 0,
 	E_LevelSlot_Food,
-	E_LevelSlot_Snake
+	E_LevelSlot_SnakeBody,
+	E_LevelSlot_SnakeHead,
+	E_LevelSlot_SnakeTail
 };
 
 static class Level
 {
 public:
+	void Update();
+	void Draw();
 	void Initializer();
 	void DeInitializer();
 	void SetMap(int x, int y, E_LevelSlot slotType);
-	E_LevelSlot GetMap(int x, int y);
 	bool GetMapOccupied(int x, int y);
 	bool IsInitialized();
-
-	void Update();
-	void Draw();
+	E_LevelSlot GetMap(int x, int y);
 
 private:
-	E_LevelSlot** m_MapArray;
 	float m_Height;
 	float m_Width;
 	bool m_initialized = false;
-	Player* m_player;
-	FoodSpawner* m_foodSpawner;
+	Player* m_player = nullptr;
+	FoodSpawner* m_foodSpawner = nullptr;
+	E_LevelSlot** m_MapArray = nullptr;
 };
