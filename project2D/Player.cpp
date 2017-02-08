@@ -44,18 +44,18 @@ void Player::Eat() // add to list and increment length
 	m_Length += 1;
 }
 
-bool Player::Check() // Check if player is colliding with wall or itself
-{
-	//if ()
-	//{
-	//
-	//}
-	//
-	//else
-	//{
-	//	return false;
-	//}
-}
+//bool Player::Check() // Check if player is colliding with wall or itself
+//{
+//	if ()
+//	{
+//	
+//	}
+//	
+//	else
+//	{
+//		return false;
+//	}
+//}
 
 	
 void Player::Reset()
