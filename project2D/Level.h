@@ -13,7 +13,7 @@
 
 enum E_LevelSlot
 {
-	E_LevelSlot_Errortype = -1,
+	E_LevelSlot_Wall = -1,
 	E_LevelSlot_Empty = 0,
 	E_LevelSlot_Food,
 	E_LevelSlot_SnakeBody,

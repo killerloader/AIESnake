@@ -85,7 +85,7 @@ void Level::DeInitializer()
 E_LevelSlot Level::GetMap(int x, int y)
 {
 	if (x < 0 || y < 0 || x > MAP_SIZE_X || y > MAP_SIZE_Y)
-		return E_LevelSlot_Errortype;
+		return E_LevelSlot_Wall;
 
 	return m_MapArray[x][y]->SlotType;
 }
