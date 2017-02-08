@@ -3,12 +3,23 @@
 
 Player::Player()
 {
-	m_Length = 2;
+	m_Length = 3;
+	m_Speed = 1;
 }
 
 Player::~Player()
 {
 
+}
+
+void Player::Update()
+{
+	TranslatePlayer();
+}
+
+void Player::TranslatePlayer()
+{
+	headpos += m_Direction;
 }
 
 void Player::SetDirection(char direction)
@@ -39,6 +50,11 @@ void Player::SetDirection(char direction)
 	}
 }
 
+void Player::SetSpeed(float Speed)
+{
+
+}
+
 void Player::Eat() // add to list and increment length
 {
 	m_Length += 1;
@@ -67,4 +83,9 @@ void Player::Die()
 {
 	// Reset the game, set pos, play sound?
 	Reset();
+}
+
+void Player::SetTail(int tailpos)
+{
+
 }

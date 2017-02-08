@@ -2,6 +2,7 @@
 #include "Texture.h"
 #include "Font.h"
 #include "Input.h"
+#include "Player.h"
 
 Application2D::Application2D() {
 
@@ -21,6 +22,8 @@ bool Application2D::startup() {
 	m_font = new aie::Font("./font/consolas.ttf", 32);
 
 	m_audio = new aie::Audio("./audio/powerup.wav");
+	
+	m_Player = new Player();
 
 	m_cameraX = 0;
 	m_cameraY = 0;
