@@ -19,7 +19,7 @@ void Player::Update()
 
 void Player::TranslatePlayer()
 {
-	headpos += m_Direction;
+	//headpos += m_Direction;
 }
 
 void Player::SetDirection(char direction)
