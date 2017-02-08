@@ -14,12 +14,28 @@ Player::~Player()
 
 void Player::Update()
 {
+	aie::Input* input = aie::Input::getInstance();
+
+	// use arrow keys to move camera
+	if (input->isKeyDown(aie::INPUT_KEY_UP))
+		SetDirection('u');
+
+	if (input->isKeyDown(aie::INPUT_KEY_DOWN))
+		SetDirection('d');
+
+	if (input->isKeyDown(aie::INPUT_KEY_LEFT))
+		SetDirection('l');
+
+	if (input->isKeyDown(aie::INPUT_KEY_RIGHT))
+		SetDirection('r');
+	
 	TranslatePlayer();
+	//SetTail()
 }
 
 void Player::TranslatePlayer()
 {
-	headpos += m_Direction;
+	//tailpos = lastbody's pos
 }
 
 void Player::SetDirection(char direction)
@@ -60,7 +76,7 @@ void Player::Eat() // add to list and increment length
 	m_Length += 1;
 }
 
-//bool Player::Check() // Check if player is colliding with wall or itself
+//bool Player::CheckCollision() // Check if player is colliding with wall or itself
 //{
 //	if ()
 //	{

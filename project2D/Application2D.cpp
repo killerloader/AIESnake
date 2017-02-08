@@ -23,8 +23,6 @@ bool Application2D::startup() {
 
 	m_audio = new aie::Audio("./audio/powerup.wav");
 	
-	m_Player = new Player();
-
 	m_cameraX = 0;
 	m_cameraY = 0;
 	m_timer = 0;
@@ -48,18 +46,18 @@ void Application2D::update(float deltaTime) {
 	// input example
 	aie::Input* input = aie::Input::getInstance();
 
-	// use arrow keys to move camera
-	if (input->isKeyDown(aie::INPUT_KEY_UP))
-		m_cameraY += 500.0f * deltaTime;
-
-	if (input->isKeyDown(aie::INPUT_KEY_DOWN))
-		m_cameraY -= 500.0f * deltaTime;
-
-	if (input->isKeyDown(aie::INPUT_KEY_LEFT))
-		m_cameraX -= 500.0f * deltaTime;
-
-	if (input->isKeyDown(aie::INPUT_KEY_RIGHT))
-		m_cameraX += 500.0f * deltaTime;
+	//// use arrow keys to move camera
+	//if (input->isKeyDown(aie::INPUT_KEY_UP))
+	//	m_cameraY += 500.0f * deltaTime;
+	//
+	//if (input->isKeyDown(aie::INPUT_KEY_DOWN))
+	//	m_cameraY -= 500.0f * deltaTime;
+	//
+	//if (input->isKeyDown(aie::INPUT_KEY_LEFT))
+	//	m_cameraX -= 500.0f * deltaTime;
+	//
+	//if (input->isKeyDown(aie::INPUT_KEY_RIGHT))
+	//	m_cameraX += 500.0f * deltaTime;
 
 	// example of audio
 	if (input->wasKeyPressed(aie::INPUT_KEY_SPACE))

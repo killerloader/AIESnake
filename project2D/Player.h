@@ -21,11 +21,11 @@ public:
 	void SetSpeed(float Speed);
 	void Eat();
 	void Reset();
-	void Die(); // call reset? redundant? LUL
+	void Die(); //call reset? redundant? LUL
 	void TranslatePlayer();
 	void SetTail(int tailpos);
 
-	bool Check(); //collusion logic here
+	bool CheckCollision(); //collusion logic here
 
 	int m_Length;
 	glm::vec2  m_Direction;
