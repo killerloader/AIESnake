@@ -1,5 +1,9 @@
 #include "Level.h"
 
+/*
+	- Pointless comment here!
+*/
+
 void Level::Initializer()
 {
 	m_MapArray = new E_LevelSlot*[MAP_SIZE_X];
