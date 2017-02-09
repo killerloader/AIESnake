@@ -5,6 +5,8 @@
 FoodSpawner::FoodSpawner(float dt)
 {
 	srand(time(NULL));
+
+	m_DoesFoodExist = false;
 }
 
 FoodSpawner::~FoodSpawner()
