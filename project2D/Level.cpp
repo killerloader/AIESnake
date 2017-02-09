@@ -191,7 +191,7 @@ void Level::ResetScore()
 	m_Score++;
 }
 
-void Level::SetMap(int x, int y, E_LevelSlot slotType, E_BlockFacing facing = E_BlockFacing_Right)
+void Level::SetMap(int x, int y, E_LevelSlot slotType, E_BlockFacing facing)
 {
 	m_MapArray[x][y]->SlotType = slotType;
 	m_MapArray[x][y]->Facing = facing;
