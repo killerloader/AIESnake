@@ -18,7 +18,7 @@ void FoodSpawner::Spawn()
 {
 	if (m_DoesFoodExist == false)
 	{
-		Level::SetMap((rand() % 16 + 1), (rand() % 16 + 1), E_LevelSlot_Food);
+		Level::SetMap((rand() % 16), (rand() % 16), E_LevelSlot_Food);
 		m_DoesFoodExist = true;
 	}
 }
