@@ -1,6 +1,8 @@
 #pragma once
+#include "Texture.h"
+#include "application.h"
 
-class Food
+class Food : public aie::Application
 {
 public:
 	Food();

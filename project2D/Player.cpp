@@ -46,10 +46,6 @@ void Player::Update(float dt)
 	if (input->isKeyDown(aie::INPUT_KEY_RIGHT))
 		SetDirection('r');
 	
-	
-
-	
-
 	static float timer = 0; 
 
 
@@ -114,11 +110,6 @@ void Player::SetDirection(char direction)
 		//LUL
 	}
 }
-
-//void Player::SetSpeed(float Speed)
-//{
-//	m_Speed = Speed;
-//}
 
 void Player::Eat() // add to list and increment length
 {
@@ -192,16 +183,3 @@ void Player::Die()
 	// Reset the game, set pos, play sound?
 	Reset();
 }
-<<<<<<< HEAD
-=======
-
-void Player::SetTail(int tailpos)
-{
-
-}
-
-void Player::Spawn()
-{
-
-}
->>>>>>> 9e1951daddd17298917067612c4ceb7b8e20626e
