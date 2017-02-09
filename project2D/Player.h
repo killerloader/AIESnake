@@ -46,6 +46,7 @@ public:
 	glm::vec2 m_Direction;
 	float m_Speed;
 
+	glm::vec2 m_lastDirection;
 
 protected:
 	aie::Texture* m_texture;
@@ -53,7 +54,4 @@ protected:
 
 private:
 	PlayerBody m_HeadPos;
-	PlayerBody* m_TailPos;
-	PlayerBody* m_BodyPos1;
-	PlayerBody* m_BodyPos2; // spot before tail
 };

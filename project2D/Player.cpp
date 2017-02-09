@@ -22,6 +22,7 @@ Player::Player()
 	Level::SetMap(3, 1, E_LevelSlot_SnakeHead);
 
 	m_HeadPos = temp;
+	m_lastDirection = m_Direction;
 }
 
 Player::~Player()
@@ -85,22 +86,24 @@ void Player::TranslatePlayer()
 
 void Player::SetDirection(char direction)
 {
-	if (direction == 'u')
+	
+	
+	if (direction == 'u' && -m_lastDirection != glm::vec2(0, 1))
 	{
 		m_Direction = glm::vec2(0,1);
 	}
 
-	else if (direction == 'd')
+	else if (direction == 'd' && -m_lastDirection != glm::vec2(0, -1))
 	{
 		m_Direction = glm::vec2(0,-1);
 	}
 
-	else if (direction == 'l')
+	else if (direction == 'l' && -m_lastDirection != glm::vec2(-1, 0))
 	{
 		m_Direction = glm::vec2(-1,0);
 	}
 
-	else if (direction == 'r')
+	else if (direction == 'r' && -m_lastDirection != glm::vec2(1, 0))
 	{
 		m_Direction = glm::vec2(1,0);
 	}
@@ -109,6 +112,8 @@ void Player::SetDirection(char direction)
 	{	
 		//LUL
 	}
+
+	m_lastDirection = m_Direction;
 }
 
 void Player::Eat() // add to list and increment length
