@@ -57,6 +57,7 @@ void Player::Update(float dt)
 		{
 			Reset();
 		}
+		Eat();
 
 		TranslatePlayer();
 		timer = 0;
