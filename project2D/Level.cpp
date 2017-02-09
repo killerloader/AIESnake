@@ -164,7 +164,7 @@ void Level::Draw(aie::Renderer2D& renderer)
 	{
 		switch (m_MapTiles[i]->SlotType)
 		{
-		case E_LevelSlot_Food: renderer.setRenderColour(1, 0, 0, 1); break;
+		case E_LevelSlot_Food: renderer.setRenderColour(204, 0, 0, 1); break;
 		case E_LevelSlot_SnakeBody: renderer.setRenderColour(1, 1, 1, 1); break;
 		case E_LevelSlot_SnakeHead: renderer.setRenderColour(1, 1, 1, 1); break;
 		case E_LevelSlot_SnakeTail: renderer.setRenderColour(1, 1, 1, 1); break;
