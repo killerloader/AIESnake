@@ -2,6 +2,7 @@
 #include <glm\glm.hpp>
 
 #define SizeOfList 16
+#define RespawnTime 10.0f
 
 class FoodSpawner
 {
@@ -10,7 +11,7 @@ public:
 	FoodSpawner(float dt);
 	~FoodSpawner();
 	
-	void Spawn();
+	void Spawn(float dt);
 	void SetFood();
 
 protected:
@@ -22,5 +23,5 @@ protected:
 
 	int m_MapX;
 	int m_MapY;
-
+	float m_Timer;
 };

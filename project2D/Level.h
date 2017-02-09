@@ -37,6 +37,7 @@ struct MapTile
 		ArrayID = -1;
 		X = x;
 		Y = y;
+		Facing = E_BlockFacing_Up;//0 degrees
 	}
 
 	E_BlockFacing Facing;
@@ -55,7 +56,7 @@ public:
 	static void Draw(aie::Renderer2D& renderer);
 	static void Initializer();
 	static void DeInitializer();
-	static void SetMap(int x, int y, E_LevelSlot slotType, E_BlockFacing facing = E_BlockFacing_Right);
+	static void SetMap(int x, int y, E_LevelSlot slotType, E_BlockFacing facing = E_BlockFacing_Up);
 	static void AddScore();
 	static void ResetScore();
 	static bool GetMapOccupied(int x, int y);

@@ -9,17 +9,17 @@ Player::Player()
 	m_Direction = glm::vec2(1, 0);
 	myQueue = new std::deque<PlayerBody>;
 	
-	PlayerBody temp = PlayerBody(1, 1, 4); // Tail
+	PlayerBody temp = PlayerBody(1, 1); // Tail
 	myQueue->push_back(temp);
-	Level::SetMap(1, 1, E_LevelSlot_SnakeTail);
+	Level::SetMap(1, 1, E_LevelSlot_SnakeTail, E_BlockFacing_Right);
 
-	temp = PlayerBody(2, 1, 2); // Body
+	temp = PlayerBody(2, 1); // Body
 	myQueue->push_front(temp);
-	Level::SetMap(2, 1, E_LevelSlot_SnakeBody);
+	Level::SetMap(2, 1, E_LevelSlot_SnakeBody, E_BlockFacing_Right);
 
-	temp = PlayerBody(3, 1, 3); // Head
+	temp = PlayerBody(3, 1); // Head
 	myQueue->push_front(temp);
-	Level::SetMap(3, 1, E_LevelSlot_SnakeHead);
+	Level::SetMap(3, 1, E_LevelSlot_SnakeHead, E_BlockFacing_Right);
 
 	m_HeadPos = temp;
 	m_lastDirection = m_Direction;
@@ -56,6 +56,7 @@ void Player::Update(float dt)
 		if (CheckCollision())
 		{
 			Reset();
+			return;
 		}
 		Eat();
 
@@ -68,28 +69,41 @@ void Player::Update(float dt)
 
 void Player::TranslatePlayer()
 {
-	m_lastDirection = m_Direction;
-	myQueue->front().ArrayID = 2;
-	Level::SetMap(m_HeadPos.posX, m_HeadPos.posY, E_LevelSlot_SnakeBody);
+	E_BlockFacing newDir;
 
-	PlayerBody NewHead = PlayerBody(m_HeadPos.posX + m_Direction.x, m_HeadPos.posY + m_Direction.y, 3);
-	myQueue->push_front(NewHead);
-	Level::SetMap(NewHead.posX, NewHead.posY, E_LevelSlot_SnakeHead);
+	if (m_Direction.x == 0 && m_Direction.y == -1)//down
+		newDir = E_BlockFacing_Down;
+	else 	if (m_Direction.x == 0 && m_Direction.y == 1)//up
+		newDir = E_BlockFacing_Up;
+	else 	if (m_Direction.x == 1 && m_Direction.y == 0)//right
+		newDir = E_BlockFacing_Right;
+	else 	if (m_Direction.x == -1 && m_Direction.y == 0)//left
+		newDir = E_BlockFacing_Left;
 
+	//Move tail (First so that we can't hit our tail if we're right behind it.
 	Level::SetMap(myQueue->back().posX, myQueue->back().posY, E_LevelSlot_Empty);
 	myQueue->pop_back();
 
-	PlayerBody NewTail = PlayerBody(myQueue->back().posX, myQueue->back().posY, 4);
-	Level::SetMap(NewTail.posX, NewTail.posY, E_LevelSlot_SnakeTail);
+	PlayerBody NewTail = PlayerBody(myQueue->back().posX, myQueue->back().posY);
+	E_BlockFacing oldBehindTailDir = Level::GetMapTile(NewTail.posX, NewTail.posY)->Facing;
+	Level::SetMap(NewTail.posX, NewTail.posY, E_LevelSlot_SnakeTail, oldBehindTailDir);
 
-	myQueue->front().ArrayID = 4;
+	//Move head
 	m_HeadPos = myQueue->front();
+	E_BlockFacing oldHeadDir = Level::GetMapTile(m_HeadPos.posX, m_HeadPos.posY)->Facing;
+
+	m_lastDirection = m_Direction;
+	Level::SetMap(m_HeadPos.posX, m_HeadPos.posY, E_LevelSlot_SnakeBody, oldHeadDir);
+
+	PlayerBody NewHead = PlayerBody(m_HeadPos.posX + m_Direction.x, m_HeadPos.posY + m_Direction.y);
+	myQueue->push_front(NewHead);
+	Level::SetMap(NewHead.posX, NewHead.posY, E_LevelSlot_SnakeHead, newDir);
+
+	m_HeadPos = NewHead;
 }
 
 void Player::SetDirection(char direction)
 {
-	
-	
 	if (direction == 'u' && -m_lastDirection != glm::vec2(0, 1))
 	{
 		m_Direction = glm::vec2(0,1);
@@ -118,46 +132,57 @@ void Player::SetDirection(char direction)
 
 void Player::Eat() // add to list and increment length
 {
-
-	PlayerBody NextSquare = PlayerBody(m_HeadPos.posX + m_Direction.x, m_HeadPos.posY + m_Direction.y, 3);
-
-	if (Level::GetMap(NextSquare.posX, NextSquare.posY) == E_LevelSlot_Food)
+	if (Level::GetMap(m_HeadPos.posX + m_Direction.x, m_HeadPos.posY + m_Direction.y) == E_LevelSlot_Food)
 	{
-		PlayerBody NewHead = PlayerBody(m_HeadPos.posX + m_Direction.x, m_HeadPos.posY + m_Direction.y, 3);
-		myQueue->push_front(NewHead);
-		Level::SetMap(NewHead.posX, NewHead.posY, E_LevelSlot_SnakeHead);
-		m_Length += 1;
+		E_BlockFacing newDir;
+
+		if (m_Direction.x == 0 && m_Direction.y == -1)//down
+			newDir = E_BlockFacing_Down;
+		else 	if (m_Direction.x == 0 && m_Direction.y == 1)//up
+			newDir = E_BlockFacing_Up;
+		else 	if (m_Direction.x == 1 && m_Direction.y == 0)//right
+			newDir = E_BlockFacing_Right;
+		else 	if (m_Direction.x == -1 && m_Direction.y == 0)//left
+			newDir = E_BlockFacing_Left;
+
 		Level::EatFood();
+
+		//Remove Food
+		Level::SetMap(m_HeadPos.posX + m_Direction.x, m_HeadPos.posY + m_Direction.y, E_LevelSlot_Empty);
+
+		E_BlockFacing oldHeadDir = Level::GetMapTile(m_HeadPos.posX, m_HeadPos.posY)->Facing;
+
+		m_lastDirection = m_Direction;
+		Level::SetMap(m_HeadPos.posX, m_HeadPos.posY, E_LevelSlot_SnakeBody, oldHeadDir);
+
+		m_HeadPos = PlayerBody(m_HeadPos.posX + m_Direction.x, m_HeadPos.posY + m_Direction.y);
+		myQueue->push_front(m_HeadPos);
+		Level::SetMap(m_HeadPos.posX, m_HeadPos.posY, E_LevelSlot_SnakeHead, newDir);
+
+		m_Length += 1;
+		
 		Level::AddScore();
 	}
-
-	
-
 }
 
 bool Player::CheckCollision() // Check if player is colliding with wall or itself
 {
-	PlayerBody NextSquare = PlayerBody(m_HeadPos.posX + m_Direction.x, m_HeadPos.posY + m_Direction.y, 3);
+	PlayerBody NextSquare = PlayerBody(m_HeadPos.posX + m_Direction.x, m_HeadPos.posY + m_Direction.y);
 	
 	if (Level::GetMap(NextSquare.posX, NextSquare.posY) == E_LevelSlot_Wall)
 	{
 		return true;
 	}
-
 	else if (Level::GetMap(NextSquare.posX, NextSquare.posY) == E_LevelSlot_SnakeBody)
 	{
 		return true;
 	}
-
-	
-	
 	else
 	{
 		return false;
 	}
 }
 
-	
 void Player::Reset()
 {
 	for (int i = 0; i < MAP_SIZE_X; i++)
@@ -172,17 +197,17 @@ void Player::Reset()
 	delete myQueue;
 	myQueue = new std::deque<PlayerBody>;
 
-	PlayerBody temp = PlayerBody(1, 1, 4); // Tail
+	PlayerBody temp = PlayerBody(1, 1); // Tail
 	myQueue->push_back(temp);
-	Level::SetMap(1, 1, E_LevelSlot_SnakeTail);
+	Level::SetMap(1, 1, E_LevelSlot_SnakeTail, E_BlockFacing_Right);
 
-	temp = PlayerBody(2, 1, 2); // Body
+	temp = PlayerBody(2, 1); // Body
 	myQueue->push_front(temp);
-	Level::SetMap(2, 1, E_LevelSlot_SnakeBody);
+	Level::SetMap(2, 1, E_LevelSlot_SnakeBody, E_BlockFacing_Right);
 
-	temp = PlayerBody(3, 1, 3); // Head
+	temp = PlayerBody(3, 1); // Head
 	myQueue->push_front(temp);
-	Level::SetMap(3, 1, E_LevelSlot_SnakeHead);
+	Level::SetMap(3, 1, E_LevelSlot_SnakeHead, E_BlockFacing_Right);
 
 	m_HeadPos = temp;
 	m_Direction = glm::vec2(1, 0);

@@ -1,6 +1,7 @@
 #include "Level.h"
 #include "Player.h"
 #include "FoodSpawner.h"
+#include "iostream"
 
 //Initialize all static variables.
 bool Level::m_initialized = false;
@@ -155,34 +156,45 @@ bool Level::IsInitialized()
 void Level::Update(float dt)
 {
 	m_player->Update(dt);
-	m_foodSpawner->Spawn();
+	m_foodSpawner->Spawn(dt);
 }
+
+#define PI 3.14
 
 void Level::Draw(aie::Renderer2D& renderer)
 {
 	renderer.setUVRect(0,0, MAP_SIZE_X, MAP_SIZE_Y);
-	renderer.drawSprite(m_backgroundTex, 0, 0, MAP_CELLSIZE_X*MAP_SIZE_X, MAP_CELLSIZE_Y*MAP_SIZE_Y,0,0,0,0);
+	renderer.drawSprite(m_backgroundTex, 0, 0, MAP_SIZE_X * MAP_CELLSIZE_X, MAP_SIZE_Y * MAP_CELLSIZE_Y, 0, 0, 0, 0);
 	renderer.setUVRect(0, 0, 1, 1);
 	for (int i = 0; i < m_MapTileCount; i++)
 	{
+		float angle = 0.0f;
+		switch (m_MapTiles[i]->Facing)
+		{
+		case E_BlockFacing_Up:	angle = 0.0f; break;
+		case E_BlockFacing_Left:angle = PI * (3.0f / 2.0f); break;
+		case E_BlockFacing_Right:angle = PI * (1.0f / 2.0f); break;
+		case E_BlockFacing_Down:angle = PI; break;
+		}
+
 		switch (m_MapTiles[i]->SlotType)
 		{
 		case E_LevelSlot_Food: 
 			//renderer.setRenderColour(204, 0, 0, 1); 
-			renderer.drawSprite(m_foodTex, m_MapTiles[i]->X * MAP_CELLSIZE_X + MAP_CELLSIZE_X / 2, m_MapTiles[i]->Y * MAP_CELLSIZE_Y + MAP_CELLSIZE_Y / 2, MAP_CELLSIZE_X, MAP_CELLSIZE_Y, 0, 0);
+			renderer.drawSprite(m_foodTex, m_MapTiles[i]->X * MAP_CELLSIZE_X + MAP_CELLSIZE_X / 2, m_MapTiles[i]->Y * MAP_CELLSIZE_Y + MAP_CELLSIZE_Y / 2, MAP_CELLSIZE_X, MAP_CELLSIZE_Y, angle, 0);
 			break;
 		case E_LevelSlot_SnakeBody: 
 			//renderer.setRenderColour(1, 1, 1, 1); 
-			renderer.drawSprite(m_bodyTex, m_MapTiles[i]->X * MAP_CELLSIZE_X + MAP_CELLSIZE_X / 2, m_MapTiles[i]->Y * MAP_CELLSIZE_Y + MAP_CELLSIZE_Y / 2, MAP_CELLSIZE_X, MAP_CELLSIZE_Y, 0, 0);
+			renderer.drawSprite(m_bodyTex, m_MapTiles[i]->X * MAP_CELLSIZE_X + MAP_CELLSIZE_X / 2, m_MapTiles[i]->Y * MAP_CELLSIZE_Y + MAP_CELLSIZE_Y / 2, MAP_CELLSIZE_X, MAP_CELLSIZE_Y, angle, 0);
 			break;
 		case E_LevelSlot_SnakeHead: 
 			//renderer.setRenderColour(1, 1, 1, 1); 
-			renderer.drawSprite(m_headTex, m_MapTiles[i]->X * MAP_CELLSIZE_X + MAP_CELLSIZE_X / 2, m_MapTiles[i]->Y * MAP_CELLSIZE_Y + MAP_CELLSIZE_Y / 2, MAP_CELLSIZE_X, MAP_CELLSIZE_Y, 0, 0);
+			renderer.drawSprite(m_headTex, m_MapTiles[i]->X * MAP_CELLSIZE_X + MAP_CELLSIZE_X / 2, m_MapTiles[i]->Y * MAP_CELLSIZE_Y + MAP_CELLSIZE_Y / 2, MAP_CELLSIZE_X, MAP_CELLSIZE_Y, angle, 0);
 			//continue;
 			break;
 		case E_LevelSlot_SnakeTail: 
 			//renderer.setRenderColour(1, 1, 1, 1); 
-			renderer.drawSprite(m_tailTex, m_MapTiles[i]->X * MAP_CELLSIZE_X + MAP_CELLSIZE_X / 2, m_MapTiles[i]->Y * MAP_CELLSIZE_Y + MAP_CELLSIZE_Y / 2, MAP_CELLSIZE_X, MAP_CELLSIZE_Y, 0, 0);
+			renderer.drawSprite(m_tailTex, m_MapTiles[i]->X * MAP_CELLSIZE_X + MAP_CELLSIZE_X / 2, m_MapTiles[i]->Y * MAP_CELLSIZE_Y + MAP_CELLSIZE_Y / 2, MAP_CELLSIZE_X, MAP_CELLSIZE_Y, angle, 0);
 			break;
 		}
 
@@ -209,6 +221,9 @@ void Level::ResetScore()
 
 void Level::SetMap(int x, int y, E_LevelSlot slotType, E_BlockFacing facing)
 {
+	if (x < 0 || y < 0 || x >= MAP_SIZE_X || y >= MAP_SIZE_Y)
+		return;
+
 	m_MapArray[x][y]->SlotType = slotType;
 	m_MapArray[x][y]->Facing = facing;
 

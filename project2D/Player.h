@@ -15,18 +15,16 @@ public:
 	{
 		float posX;
 		float posY;
-		int ArrayID;
 		
 		PlayerBody()
 		{
 
 		}
 
-		PlayerBody(float posx, float posy,int arrayid)
+		PlayerBody(float posx, float posy)
 		{
 			posX = posx;
 			posY = posy;
-			ArrayID = arrayid;
 		}
 	};
 
