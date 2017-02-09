@@ -67,6 +67,7 @@ void Player::Update(float dt)
 
 void Player::TranslatePlayer()
 {
+	m_lastDirection = m_Direction;
 	myQueue->front().ArrayID = 2;
 	Level::SetMap(m_HeadPos.posX, m_HeadPos.posY, E_LevelSlot_SnakeBody);
 
@@ -112,8 +113,6 @@ void Player::SetDirection(char direction)
 	{	
 		//LUL
 	}
-
-	m_lastDirection = m_Direction;
 }
 
 void Player::Eat() // add to list and increment length

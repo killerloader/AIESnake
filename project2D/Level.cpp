@@ -1,5 +1,6 @@
 #include "Level.h"
 #include "Player.h"
+#include "FoodSpawner.h"
 
 //Initialize all static variables.
 bool Level::m_initialized = false;
@@ -10,6 +11,12 @@ MapTile** Level::m_MapTiles = nullptr;
 int Level::m_MapTileCount = 0;
 int Level::m_Score = 0;
 aie::Font* Level::m_font = nullptr;
+aie::Texture* Level::m_headTex = nullptr;
+aie::Texture* Level::m_bodyTex = nullptr;
+aie::Texture* Level::m_tailTex = nullptr;
+aie::Texture* Level::m_foodTex = nullptr;
+aie::Texture* Level::m_backgroundTex = nullptr;
+aie::Texture* Level::m_wallTex = nullptr;
 
 void Level::Initializer()
 {
@@ -30,8 +37,7 @@ void Level::Initializer()
 		}
 	}
 
-	m_foodSpawner = new FoodSpawner();
-	
+	m_foodSpawner = new FoodSpawner(0.0f);
 
 	//Setup map tiles with maximum number of tiles possible.
 	m_MapTiles = new MapTile*[MAP_SIZE_X * MAP_SIZE_Y];
@@ -47,9 +53,13 @@ void Level::Initializer()
 	m_player = new Player();
 	//m_player->Spawn();
 
-	//SetMap(1, 1, E_LevelSlot_Food);
-	//SetMap(2, 1, E_LevelSlot_SnakeBody);
-	//SetMap(3, 1, E_LevelSlot_Food);
+	//Load textures
+	m_headTex = new aie::Texture("");
+	m_bodyTex = new aie::Texture("");
+	m_tailTex = new aie::Texture("");
+	m_foodTex = new aie::Texture("");
+	m_backgroundTex = new aie::Texture("");
+	m_wallTex = new aie::Texture("");
 }
 
 //Deconstructor, destroys all data.
@@ -70,20 +80,45 @@ void Level::DeInitializer()
 	//Destroy all actual objects
 	for (int i = 0; i < MAP_SIZE_X; i++)
 		for (int ii = 0; ii < MAP_SIZE_Y; ii++)
+		{
 			delete m_MapArray[i][ii];
+			m_MapArray[i][ii] = nullptr;
+		}
 		
 	//Destroy all 2nd dimension arrays.
 	for (int i = 0; i < MAP_SIZE_X; i++)
+	{
 		delete[] m_MapArray[i];
+		m_MapArray[i] = nullptr;
+	}
 
 	//Destroy first dimension array.
 	delete[] m_MapArray;
 
+	m_MapArray = nullptr;
+
 	delete[] m_MapTiles;
 	m_MapTileCount = 0;
 
+	m_MapTiles = nullptr;
+
 	//Destroy font.
 	delete m_font;
+	m_font = nullptr;
+
+	delete m_headTex;
+	delete m_bodyTex;
+	delete m_tailTex;
+	delete m_foodTex;
+	delete m_backgroundTex;
+	delete m_wallTex;
+
+	m_headTex = nullptr;
+	m_bodyTex = nullptr;
+	m_tailTex = nullptr;
+	m_foodTex = nullptr;
+	m_backgroundTex = nullptr;
+	m_wallTex = nullptr;
 }
 
 E_LevelSlot Level::GetMap(int x, int y)
@@ -102,6 +137,11 @@ MapTile* Level::GetMapTile(int x, int y)
 	return m_MapArray[x][y];
 }
 
+void Level::EatFood()
+{
+	m_foodSpawner->SetFood();
+}
+
 bool Level::GetMapOccupied(int x, int y)
 {
 	return m_MapArray[x][y]->SlotType != E_LevelSlot_Empty;
@@ -115,7 +155,7 @@ bool Level::IsInitialized()
 void Level::Update(float dt)
 {
 	m_player->Update(dt);
-	//m_foodSpawner->Update(dt);
+	m_foodSpawner->Spawn();
 }
 
 void Level::Draw(aie::Renderer2D& renderer)

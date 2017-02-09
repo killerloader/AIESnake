@@ -50,6 +50,7 @@ public:
 	static bool IsInitialized();
 	static E_LevelSlot GetMap(int x, int y);
 	static MapTile* GetMapTile(int x, int y);
+	static void EatFood();
 
 private:
 	static bool m_initialized;
@@ -60,4 +61,10 @@ private:
 	static int m_MapTileCount;
 	static int m_Score;
 	static aie::Font* m_font;
+	static aie::Texture* m_headTex;
+	static aie::Texture* m_bodyTex;
+	static aie::Texture* m_tailTex;
+	static aie::Texture* m_foodTex;
+	static aie::Texture* m_backgroundTex;
+	static aie::Texture* m_wallTex;
 };
