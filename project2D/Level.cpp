@@ -54,11 +54,11 @@ void Level::Initializer()
 	//m_player->Spawn();
 
 	//Load textures
-	m_headTex = new aie::Texture("");
-	m_bodyTex = new aie::Texture("");
-	m_tailTex = new aie::Texture("");
-	m_foodTex = new aie::Texture("");
-	m_backgroundTex = new aie::Texture("");
+	m_headTex = new aie::Texture("textures\\tankBlue.png");
+	m_bodyTex = new aie::Texture("textures\\tankGreen.png");
+	m_tailTex = new aie::Texture("textures\\tankRed.png");
+	m_foodTex = new aie::Texture("textures\\rock_small.png");
+	m_backgroundTex = new aie::Texture("textures\\rock_small.png");
 	m_wallTex = new aie::Texture("");
 }
 
@@ -164,14 +164,27 @@ void Level::Draw(aie::Renderer2D& renderer)
 	{
 		switch (m_MapTiles[i]->SlotType)
 		{
-		case E_LevelSlot_Food: renderer.setRenderColour(204, 0, 0, 1); break;
-		case E_LevelSlot_SnakeBody: renderer.setRenderColour(1, 1, 1, 1); break;
-		case E_LevelSlot_SnakeHead: renderer.setRenderColour(1, 1, 1, 1); break;
-		case E_LevelSlot_SnakeTail: renderer.setRenderColour(1, 1, 1, 1); break;
+		case E_LevelSlot_Food: 
+			//renderer.setRenderColour(204, 0, 0, 1); 
+			renderer.drawSprite(m_foodTex, m_MapTiles[i]->X * MAP_CELLSIZE_X + MAP_CELLSIZE_X / 2, m_MapTiles[i]->Y * MAP_CELLSIZE_Y + MAP_CELLSIZE_Y / 2, MAP_CELLSIZE_X, MAP_CELLSIZE_Y, 0, 0);
+			break;
+		case E_LevelSlot_SnakeBody: 
+			//renderer.setRenderColour(1, 1, 1, 1); 
+			renderer.drawSprite(m_bodyTex, m_MapTiles[i]->X * MAP_CELLSIZE_X + MAP_CELLSIZE_X / 2, m_MapTiles[i]->Y * MAP_CELLSIZE_Y + MAP_CELLSIZE_Y / 2, MAP_CELLSIZE_X, MAP_CELLSIZE_Y, 0, 0);
+			break;
+		case E_LevelSlot_SnakeHead: 
+			//renderer.setRenderColour(1, 1, 1, 1); 
+			renderer.drawSprite(m_headTex, m_MapTiles[i]->X * MAP_CELLSIZE_X + MAP_CELLSIZE_X / 2, m_MapTiles[i]->Y * MAP_CELLSIZE_Y + MAP_CELLSIZE_Y / 2, MAP_CELLSIZE_X, MAP_CELLSIZE_Y, 0, 0);
+			//continue;
+			break;
+		case E_LevelSlot_SnakeTail: 
+			//renderer.setRenderColour(1, 1, 1, 1); 
+			renderer.drawSprite(m_tailTex, m_MapTiles[i]->X * MAP_CELLSIZE_X + MAP_CELLSIZE_X / 2, m_MapTiles[i]->Y * MAP_CELLSIZE_Y + MAP_CELLSIZE_Y / 2, MAP_CELLSIZE_X, MAP_CELLSIZE_Y, 0, 0);
+			break;
 		}
 
 		//Draw from corner instead of center.
-		renderer.drawBox(m_MapTiles[i]->X * MAP_CELLSIZE_X + MAP_CELLSIZE_X / 2, m_MapTiles[i]->Y * MAP_CELLSIZE_Y + MAP_CELLSIZE_Y / 2, MAP_CELLSIZE_X, MAP_CELLSIZE_Y);
+		//renderer.drawBox(m_MapTiles[i]->X * MAP_CELLSIZE_X + MAP_CELLSIZE_X / 2, m_MapTiles[i]->Y * MAP_CELLSIZE_Y + MAP_CELLSIZE_Y / 2, MAP_CELLSIZE_X, MAP_CELLSIZE_Y);
 	}
 
 	//Draw white score.
