@@ -20,6 +20,14 @@ enum E_LevelSlot
 	E_LevelSlot_SnakeTail
 };
 
+enum E_BlockFacing
+{
+	E_BlockFacing_Up,
+	E_BlockFacing_Left,
+	E_BlockFacing_Right,
+	E_BlockFacing_Down,
+};
+
 struct MapTile
 {
 	MapTile(E_LevelSlot type, int x, int y)
@@ -28,7 +36,10 @@ struct MapTile
 		ArrayID = -1;
 		X = x;
 		Y = y;
+		Facing = facing;
 	}
+
+	E_BlockFacing Facing;
 
 	E_LevelSlot SlotType;
 	int ArrayID;	//Remembered point in the map array. For optimization.
@@ -44,8 +55,9 @@ public:
 	static void Draw(aie::Renderer2D& renderer);
 	static void Initializer();
 	static void DeInitializer();
-	static void SetMap(int x, int y, E_LevelSlot slotType);
+	static void SetMap(int x, int y, E_LevelSlot slotType, E_BlockFacing facing = E_BlockFacing_Right);
 	static void AddScore();
+	static void ResetScore();
 	static bool GetMapOccupied(int x, int y);
 	static bool IsInitialized();
 	static E_LevelSlot GetMap(int x, int y);

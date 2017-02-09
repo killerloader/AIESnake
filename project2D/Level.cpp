@@ -186,9 +186,15 @@ void Level::AddScore()
 	m_Score++;
 }
 
-void Level::SetMap(int x, int y, E_LevelSlot slotType)
+void Level::ResetScore()
+{
+	m_Score++;
+}
+
+void Level::SetMap(int x, int y, E_LevelSlot slotType, E_BlockFacing facing = E_BlockFacing_Right)
 {
 	m_MapArray[x][y]->SlotType = slotType;
+	m_MapArray[x][y]->Facing = facing;
 
 	//If not cached yet. Only add if not empty.
 	if (m_MapArray[x][y]->ArrayID == -1 && slotType != E_LevelSlot_Empty)
