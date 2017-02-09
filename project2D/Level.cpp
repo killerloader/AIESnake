@@ -58,7 +58,7 @@ void Level::Initializer()
 	m_bodyTex = new aie::Texture("textures\\tankGreen.png");
 	m_tailTex = new aie::Texture("textures\\tankRed.png");
 	m_foodTex = new aie::Texture("textures\\rock_small.png");
-	m_backgroundTex = new aie::Texture("textures\\rock_small.png");
+	m_backgroundTex = new aie::Texture("textures\\tankBeige.png");
 	m_wallTex = new aie::Texture("");
 }
 
@@ -160,6 +160,9 @@ void Level::Update(float dt)
 
 void Level::Draw(aie::Renderer2D& renderer)
 {
+	renderer.setUVRect(0,0, MAP_SIZE_X, MAP_SIZE_Y);
+	renderer.drawSprite(m_backgroundTex, 0, 0, MAP_CELLSIZE_X*MAP_SIZE_X, MAP_CELLSIZE_Y*MAP_SIZE_Y,0,0,0,0);
+	renderer.setUVRect(0, 0, 1, 1);
 	for (int i = 0; i < m_MapTileCount; i++)
 	{
 		switch (m_MapTiles[i]->SlotType)
