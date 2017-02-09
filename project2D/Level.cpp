@@ -45,10 +45,6 @@ void Level::Initializer()
 	m_font = new aie::Font("./font/consolas.ttf", 32);
 
 	m_player->Spawn();
-
-	//SetMap(1, 1, E_LevelSlot_Food);
-	//SetMap(2, 1, E_LevelSlot_SnakeBody);
-	//SetMap(3, 1, E_LevelSlot_Food);
 }
 
 //Deconstructor, destroys all data.
@@ -93,7 +89,7 @@ E_LevelSlot Level::GetMap(int x, int y)
 	return m_MapArray[x][y]->SlotType;
 }
 
-MapTile* Level::GetMapTile(int x, int y)
+const MapTile* Level::GetMapTile(int x, int y)
 {
 	if (x < 0 || y < 0 || x > MAP_SIZE_X || y > MAP_SIZE_Y)
 		return nullptr;
@@ -114,7 +110,7 @@ bool Level::IsInitialized()
 void Level::Update(float dt)
 {
 	m_player->Update(dt);
-	//m_foodSpawner->Update(dt);
+	m_foodSpawner->Update(dt);
 }
 
 void Level::Draw(aie::Renderer2D& renderer)
