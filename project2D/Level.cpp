@@ -1,4 +1,5 @@
 #include "Level.h"
+#include "Player.h"
 
 //Initialize all static variables.
 bool Level::m_initialized = false;
@@ -43,9 +44,11 @@ void Level::Initializer()
 	//Load font:
 	m_font = new aie::Font("./font/consolas.ttf", 32);
 
-	SetMap(1, 1, E_LevelSlot_Food);
-	SetMap(2, 1, E_LevelSlot_SnakeBody);
-	SetMap(3, 1, E_LevelSlot_Food);
+	m_player->Spawn();
+
+	//SetMap(1, 1, E_LevelSlot_Food);
+	//SetMap(2, 1, E_LevelSlot_SnakeBody);
+	//SetMap(3, 1, E_LevelSlot_Food);
 }
 
 //Deconstructor, destroys all data.
@@ -90,9 +93,12 @@ E_LevelSlot Level::GetMap(int x, int y)
 	return m_MapArray[x][y]->SlotType;
 }
 
-const MapTile& Level::GetMapTile(int x, int y)
+MapTile* Level::GetMapTile(int x, int y)
 {
-	return *m_MapArray[x][y];
+	if (x < 0 || y < 0 || x > MAP_SIZE_X || y > MAP_SIZE_Y)
+		return nullptr;
+
+	return m_MapArray[x][y];
 }
 
 bool Level::GetMapOccupied(int x, int y)
@@ -107,7 +113,7 @@ bool Level::IsInitialized()
 
 void Level::Update(float dt)
 {
-	m_player->Update(/* dt*/);
+	m_player->Update(dt);
 	//m_foodSpawner->Update(dt);
 }
 
@@ -134,6 +140,11 @@ void Level::Draw(aie::Renderer2D& renderer)
 	renderer.drawText(m_font, fps, 0, MAP_SIZE_X * MAP_CELLSIZE_X - 24);
 }
 
+void Level::AddScore()
+{
+	m_Score++;
+}
+
 void Level::SetMap(int x, int y, E_LevelSlot slotType)
 {
 	m_MapArray[x][y]->SlotType = slotType;
@@ -150,7 +161,7 @@ void Level::SetMap(int x, int y, E_LevelSlot slotType)
 		//Move end to removed node, as order doesn't matter, and this is the quickest way of removing.
 		//If there is only one value, or the value you are moving is the end, this should still work.
 		m_MapTiles[m_MapArray[x][y]->ArrayID] = m_MapTiles[m_MapTileCount - 1];
-		m_MapTiles[m_MapTileCount - 1]->ArrayID = m_MapTileCount - 1;//Update array ID for new position.
+		m_MapTiles[m_MapTileCount - 1]->ArrayID = m_MapArray[x][y]->ArrayID;//Update array ID for new position.
 		m_MapTiles[m_MapTileCount - 1] = nullptr;
 		m_MapTileCount--;
 

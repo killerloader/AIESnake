@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Player.h"
 #include "FoodSpawner.h"
 #include "Texture.h"
 #include "Font.h"
@@ -36,6 +35,8 @@ struct MapTile
 	int X, Y;//X and Y slot position.
 };
 
+class Player;
+
 class Level
 {
 public:
@@ -44,10 +45,11 @@ public:
 	static void Initializer();
 	static void DeInitializer();
 	static void SetMap(int x, int y, E_LevelSlot slotType);
+	static void AddScore();
 	static bool GetMapOccupied(int x, int y);
 	static bool IsInitialized();
 	static E_LevelSlot GetMap(int x, int y);
-	static const MapTile& GetMapTile(int x, int y);
+	static MapTile* GetMapTile(int x, int y);
 
 private:
 	static bool m_initialized;
