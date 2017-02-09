@@ -5,4 +5,4 @@ class Food
 public:
 	Food();
 	
-}
+};
