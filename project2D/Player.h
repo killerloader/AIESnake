@@ -37,8 +37,13 @@ public:
 	void Reset();
 	void Die(); //call reset? redundant? LUL
 	void TranslatePlayer();
+<<<<<<< HEAD
 	void SetHead(glm::vec2 myvec);
 	void SetTail();
+=======
+	void SetTail(int tailpos);
+	void Spawn();
+>>>>>>> 9e1951daddd17298917067612c4ceb7b8e20626e
 
 	bool CheckCollision(); //collision logic here
 

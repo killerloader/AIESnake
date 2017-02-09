@@ -192,3 +192,16 @@ void Player::Die()
 	// Reset the game, set pos, play sound?
 	Reset();
 }
+<<<<<<< HEAD
+=======
+
+void Player::SetTail(int tailpos)
+{
+
+}
+
+void Player::Spawn()
+{
+
+}
+>>>>>>> 9e1951daddd17298917067612c4ceb7b8e20626e
