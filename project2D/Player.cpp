@@ -50,7 +50,7 @@ void Player::Update(float dt)
 	static float timer = 0; 
 
 
-	if (timer >= .2)
+	if (timer >= GAME_STEP)
 	{
 		
 		if (CheckCollision())

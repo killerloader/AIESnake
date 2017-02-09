@@ -9,6 +9,7 @@
 #define MAP_SIZE_Y 16
 #define MAP_CELLSIZE_X 32
 #define MAP_CELLSIZE_Y 32
+#define GAME_STEP 0.2
 
 enum E_LevelSlot
 {
