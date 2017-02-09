@@ -181,6 +181,8 @@ void Player::Reset()
 	Level::SetMap(3, 1, E_LevelSlot_SnakeHead);
 
 	m_HeadPos = temp;
+	m_Direction = glm::vec2(1, 0);
+	m_lastDirection = m_Direction;
 }
 
 void Player::Die()
