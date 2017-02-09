@@ -188,7 +188,7 @@ void Level::AddScore()
 
 void Level::ResetScore()
 {
-	m_Score++;
+	m_Score = 0;
 }
 
 void Level::SetMap(int x, int y, E_LevelSlot slotType, E_BlockFacing facing)

@@ -128,6 +128,7 @@ void Player::Eat() // add to list and increment length
 		Level::SetMap(NewHead.posX, NewHead.posY, E_LevelSlot_SnakeHead);
 		m_Length += 1;
 		Level::EatFood();
+		Level::AddScore();
 	}
 
 	
@@ -188,6 +189,7 @@ void Player::Reset()
 	m_lastDirection = m_Direction;
 
 	Level::EatFood();
+	Level::ResetScore();
 }
 
 void Player::Die()
