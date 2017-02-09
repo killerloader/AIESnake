@@ -1,6 +1,8 @@
 #pragma once
 #include "Renderer2D.h"
 #include <glm\glm.hpp>
+#include "Level.h"
+#include <deque>   
 
 class Player
 {
@@ -11,32 +13,49 @@ public:
 
 	struct PlayerBody
 	{
-		int posX;
-		int posY;
-		bool isActive;
+		float posX;
+		float posY;
+		int ArrayID;
+		
+		PlayerBody()
+		{
+
+		}
+
+		PlayerBody(float posx, float posy,int arrayid)
+		{
+			posX = posx;
+			posY = posy;
+			ArrayID = arrayid;
+		}
 	};
 
-	void Update();
+	void Update(float dt);
 	void SetDirection(char Direction);
-	void SetSpeed(float Speed);
+	//void SetSpeed(float Speed);
 	void Eat();
 	void Reset();
 	void Die(); //call reset? redundant? LUL
 	void TranslatePlayer();
-	void SetTail(int tailpos);
+	void SetHead(glm::vec2 myvec);
+	void SetTail();
 
-	bool CheckCollision(); //collusion logic here
+	bool CheckCollision(); //collision logic here
 
+	std::deque<PlayerBody>* myQueue;
+	
 	int m_Length;
-	glm::vec2  m_Direction;
+	glm::vec2 m_Direction;
 	float m_Speed;
 
+
 protected:
-	aie::Texture*	m_texture;
+	aie::Texture* m_texture;
 
 
 private:
-	//headpos
-	//position
-	//tailpos
+	PlayerBody m_HeadPos;
+	PlayerBody* m_TailPos;
+	PlayerBody* m_BodyPos1;
+	PlayerBody* m_BodyPos2; // spot before tail
 };

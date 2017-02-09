@@ -31,7 +31,7 @@ void Level::Initializer()
 	}
 
 	m_foodSpawner = new FoodSpawner();
-	m_player = new Player();
+	
 
 	//Setup map tiles with maximum number of tiles possible.
 	m_MapTiles = new MapTile*[MAP_SIZE_X * MAP_SIZE_Y];
@@ -44,7 +44,8 @@ void Level::Initializer()
 	//Load font:
 	m_font = new aie::Font("./font/consolas.ttf", 32);
 
-	m_player->Spawn();
+	m_player = new Player();
+	//m_player->Spawn();
 
 	//SetMap(1, 1, E_LevelSlot_Food);
 	//SetMap(2, 1, E_LevelSlot_SnakeBody);
@@ -87,7 +88,7 @@ void Level::DeInitializer()
 
 E_LevelSlot Level::GetMap(int x, int y)
 {
-	if (x < 0 || y < 0 || x > MAP_SIZE_X || y > MAP_SIZE_Y)
+	if (x < 0 || y < 0 || x >= MAP_SIZE_X || y >= MAP_SIZE_Y)
 		return E_LevelSlot_Wall;
 
 	return m_MapArray[x][y]->SlotType;
@@ -95,7 +96,7 @@ E_LevelSlot Level::GetMap(int x, int y)
 
 MapTile* Level::GetMapTile(int x, int y)
 {
-	if (x < 0 || y < 0 || x > MAP_SIZE_X || y > MAP_SIZE_Y)
+	if (x < 0 || y < 0 || x >= MAP_SIZE_X || y >= MAP_SIZE_Y)
 		return nullptr;
 
 	return m_MapArray[x][y];
