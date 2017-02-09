@@ -135,7 +135,7 @@ void Level::Draw(aie::Renderer2D& renderer)
 	}
 
 	//Draw white score.
-	renderer.setRenderColour(1, 1, 1, 1);
+	renderer.setRenderColour(255, 255, 0, 1);
 	char fps[32];
 	sprintf_s(fps, 32, "Score: %i", m_Score);
 	renderer.drawText(m_font, fps, 0, MAP_SIZE_X * MAP_CELLSIZE_X - 24);

@@ -11,5 +11,5 @@ public:
 	void Spawn();
 
 protected:
-	//int m_ListOfFood[SizeOfList];
+	int m_ListOfFood[SizeOfList];
 };

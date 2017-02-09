@@ -7,6 +7,7 @@ class Food : public aie::Application
 public:
 	Food();
 	~Food();
+
 	void Start();
 	
 protected:
