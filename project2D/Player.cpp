@@ -128,6 +128,8 @@ void Player::Eat() // add to list and increment length
 	}
 
 	m_Length += 1;
+	Level::EatFood();
+
 }
 
 bool Player::CheckCollision() // Check if player is colliding with wall or itself
