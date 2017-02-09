@@ -36,7 +36,6 @@ struct MapTile
 		ArrayID = -1;
 		X = x;
 		Y = y;
-		Facing = facing;
 	}
 
 	E_BlockFacing Facing;
