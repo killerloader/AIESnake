@@ -186,6 +186,8 @@ void Player::Reset()
 	m_HeadPos = temp;
 	m_Direction = glm::vec2(1, 0);
 	m_lastDirection = m_Direction;
+
+	Level::EatFood();
 }
 
 void Player::Die()

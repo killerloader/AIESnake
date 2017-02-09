@@ -18,8 +18,15 @@ void FoodSpawner::Spawn()
 {
 	if (m_DoesFoodExist == false)
 	{
-		Level::SetMap((rand() % 16), (rand() % 16), E_LevelSlot_Food);
-		m_DoesFoodExist = true;
+
+		m_MapX = rand() % 16;
+		m_MapY = rand() % 16;
+
+		if (Level::GetMap(m_MapX, m_MapY) == E_LevelSlot_Empty)
+		{
+			Level::SetMap(m_MapX, m_MapY, E_LevelSlot_Food);
+			m_DoesFoodExist = true;
+		}
 	}
 }
 
