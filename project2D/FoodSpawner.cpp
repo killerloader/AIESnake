@@ -1,5 +1,5 @@
 #include "FoodSpawner.h"
-
+#include "Food.h"
 
 FoodSpawner::FoodSpawner()
 {

@@ -12,7 +12,7 @@ Player::~Player()
 
 }
 
-void Player::Update()
+void Player::Update(float dt)
 {
 	aie::Input* input = aie::Input::getInstance();
 
@@ -102,6 +102,11 @@ void Player::Die()
 }
 
 void Player::SetTail(int tailpos)
+{
+
+}
+
+void Player::Spawn()
 {
 
 }

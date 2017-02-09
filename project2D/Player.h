@@ -16,7 +16,7 @@ public:
 		bool isActive;
 	};
 
-	void Update();
+	void Update(float dt);
 	void SetDirection(char Direction);
 	void SetSpeed(float Speed);
 	void Eat();
@@ -24,6 +24,7 @@ public:
 	void Die(); //call reset? redundant? LUL
 	void TranslatePlayer();
 	void SetTail(int tailpos);
+	void Spawn();
 
 	bool CheckCollision(); //collusion logic here
 
