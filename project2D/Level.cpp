@@ -55,10 +55,10 @@ void Level::Initializer()
 	//m_player->Spawn();
 
 	//Load textures
-	m_headTex = new aie::Texture("textures\\tankBlue.png");
-	m_bodyTex = new aie::Texture("textures\\tankGreen.png");
-	m_tailTex = new aie::Texture("textures\\tankRed.png");
-	m_foodTex = new aie::Texture("textures\\rock_small.png");
+	m_headTex = new aie::Texture("textures\\ship.png");
+	m_bodyTex = new aie::Texture("textures\\rock_small.png");
+	m_tailTex = new aie::Texture("textures\\rock_medium.png");
+	m_foodTex = new aie::Texture("textures\\car.png");
 	m_backgroundTex = new aie::Texture("textures\\tankBeige.png");
 	m_wallTex = new aie::Texture("");
 }
@@ -163,6 +163,7 @@ void Level::Update(float dt)
 
 void Level::Draw(aie::Renderer2D& renderer)
 {
+	//Repeat bg
 	renderer.setUVRect(0,0, MAP_SIZE_X, MAP_SIZE_Y);
 	renderer.drawSprite(m_backgroundTex, 0, 0, MAP_SIZE_X * MAP_CELLSIZE_X, MAP_SIZE_Y * MAP_CELLSIZE_Y, 0, 0, 0, 0);
 	renderer.setUVRect(0, 0, 1, 1);
@@ -172,8 +173,8 @@ void Level::Draw(aie::Renderer2D& renderer)
 		switch (m_MapTiles[i]->Facing)
 		{
 		case E_BlockFacing_Up:	angle = 0.0f; break;
-		case E_BlockFacing_Left:angle = PI * (3.0f / 2.0f); break;
-		case E_BlockFacing_Right:angle = PI * (1.0f / 2.0f); break;
+		case E_BlockFacing_Right:angle = PI * (3.0f / 2.0f); break;
+		case E_BlockFacing_Left:angle = PI * (1.0f / 2.0f); break;
 		case E_BlockFacing_Down:angle = PI; break;
 		}
 

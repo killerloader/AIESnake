@@ -45,5 +45,6 @@ void FoodSpawner::Spawn(float dt)
 void FoodSpawner::SetFood()
 {
 	m_DoesFoodExist = false;
+	m_Timer = 0.0f;
 }
 
