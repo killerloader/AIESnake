@@ -126,10 +126,11 @@ void Player::Eat() // add to list and increment length
 		PlayerBody NewHead = PlayerBody(m_HeadPos.posX + m_Direction.x, m_HeadPos.posY + m_Direction.y, 3);
 		myQueue->push_front(NewHead);
 		Level::SetMap(NewHead.posX, NewHead.posY, E_LevelSlot_SnakeHead);
+		m_Length += 1;
+		Level::EatFood();
 	}
 
-	m_Length += 1;
-	Level::EatFood();
+	
 
 }
 
